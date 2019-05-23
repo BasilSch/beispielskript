@@ -6,11 +6,12 @@ rm(list=ls())
 # load packages -----------------------------------------------------------
 library(tidyverse)
 library(scales)
+library(readxl)
 
 
 # load data ---------------------------------------------------------------
-dat <- read_excel("data20190501.xlsx",
-                  sheet=2)
+dat <- read_excel("data_beispielskript.xlsx",
+                  sheet=1)
 
 
 # Codierung der ersten Frage ----------------------------------------------
@@ -29,15 +30,15 @@ q1 <- dat %>%
                            .$value==9999999 ~ 0)) %>%
   group_by(item) %>%
   dplyr::summarise(summe = sum(value)) %>%
-  mutate(item = case_when(.$item == 'v1_A' ~ 'Pecha-kucha presentation by the 3 teams',
-                          .$item == 'v1_B' ~ 'Marshmallow Challenge in mixed groups',
-                          .$item == 'v1_C' ~ 'Joint excursion to Batumi Botanical Garden',
-                          .$item == 'v1_D' ~ 'Journalist Group presentations',
-                          .$item == 'v1_E' ~ 'Introduction to IDA: input to digital change @ GIZ',
-                          .$item == 'v1_F' ~ 'Experience exchange from Armenia, Azerbaijan and Georgia',
-                          .$item == 'v1_G' ~ 'Agile methods: the “double diamond” as prototyping exercise',
-                          .$item == 'v1_H' ~ 'Human Bingo – to better get to know all (new) participants',
-                          .$item == 'v1_I' ~ 'Farewell party with joint dinner, folkloric dances and disco')) %>%
+  mutate(item = case_when(.$item == 'v1_A' ~ 'Antwort 1',
+                          .$item == 'v1_B' ~ 'Antwort 2',
+                          .$item == 'v1_C' ~ 'Antwort 3',
+                          .$item == 'v1_D' ~ 'Antwort 4',
+                          .$item == 'v1_E' ~ 'Antwort 5',
+                          .$item == 'v1_F' ~ 'Antwort 6',
+                          .$item == 'v1_G' ~ 'Antwort 7',
+                          .$item == 'v1_H' ~ 'Antwort 8',
+                          .$item == 'v1_I' ~ 'Antwort 9')) %>%
   arrange(summe) %>%
   mutate(label = paste0(item,': ',summe, ' points'))
 
@@ -90,14 +91,14 @@ q3 <- dat %>%
   mutate(share = anzahl/sum(anzahl)) %>%
   ungroup()%>%
   complete(item,value,fill=list(anzahl=0, share=0)) %>%
-  mutate(item = case_when(.$item == 'v3_A' ~ 'journalist groups summarizing the previous day',
-                          .$item == 'v3_B' ~ 'admin staff joining the normal programme',
-                          .$item == 'v3_C' ~ 'organized entertainment programme for each evening (on a voluntary basis)',
-                          .$item == 'v3_D' ~ 'identifying the lessons learned after 3 years of IBiS implementation',
-                          .$item == 'v3_E' ~ 'presentation of environmental campaigns from the 3 countries',
-                          .$item == 'v3_F' ~ 'presentation of “highlights” from the 3 countries',
-                          .$item == 'v3_G' ~ 'knowing about the “state of the art” of new ECOserve programme',
-                          .$item == 'v3_H' ~ 'making nice music gigs during the evenings',
+  mutate(item = case_when(.$item == 'v3_A' ~ 'Antwort 1',
+                          .$item == 'v3_B' ~ 'Antwort 2',
+                          .$item == 'v3_C' ~ 'Antwort 3',
+                          .$item == 'v3_D' ~ 'Antwort 4',
+                          .$item == 'v3_E' ~ 'Antwort 5',
+                          .$item == 'v3_F' ~ 'Antwort 6',
+                          .$item == 'v3_G' ~ 'Antwort 7',
+                          .$item == 'v3_H' ~ 'Antwort 8',
                           .$item == 'v3_I' ~ 'Other')) %>%
   mutate(value = case_when(.$value == 1 ~ 'Much expected',
                           .$value == 2 ~ 'Expected',
@@ -119,14 +120,14 @@ q3.HELP <- dat %>%
                            .$value==-99 ~ 0)) %>%
     group_by(item) %>%
   dplyr::summarise(anzahl = sum(value)) %>%
-  mutate(item = case_when(.$item == 'v3_A' ~ 'journalist groups summarizing the previous day',
-                          .$item == 'v3_B' ~ 'admin staff joining the normal programme',
-                          .$item == 'v3_C' ~ 'organized entertainment programme for each evening (on a voluntary basis)',
-                          .$item == 'v3_D' ~ 'identifying the lessons learned after 3 years of IBiS implementation',
-                          .$item == 'v3_E' ~ 'presentation of environmental campaigns from the 3 countries',
-                          .$item == 'v3_F' ~ 'presentation of “highlights” from the 3 countries',
-                          .$item == 'v3_G' ~ 'knowing about the “state of the art” of new ECOserve programme',
-                          .$item == 'v3_H' ~ 'making nice music gigs during the evenings',
+  mutate(item = case_when(.$item == 'v3_A' ~ 'Antwort 1',
+                          .$item == 'v3_B' ~ 'Antwort 2',
+                          .$item == 'v3_C' ~ 'Antwort 3',
+                          .$item == 'v3_D' ~ 'Antwort 4',
+                          .$item == 'v3_E' ~ 'Antwort 5',
+                          .$item == 'v3_F' ~ 'Antwort 6',
+                          .$item == 'v3_G' ~ 'Antwort 7',
+                          .$item == 'v3_H' ~ 'Antwort 8',
                           .$item == 'v3_I' ~ 'Other')) %>%
   arrange(-anzahl) %>%
   mutate(item = factor(item,levels = rev(c(unique(.$item)[.$item!='Other'],'Other'))))
